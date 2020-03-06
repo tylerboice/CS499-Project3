@@ -1,23 +1,18 @@
 NNetOneSplit <-function(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.subtrain)
 {
-  X.mat <- as.matrix(spam.dt[, -label.col.i, with=FALSE])
-  X.sc <- scale(X.mat)
-  y.vec <- ifelse(spam.dt[[label.col.i]]==1, 1, -1)
-  max.epochs <- 1
-  step.size <- 0.05
-  n.hidden.units <- c(ncol(X.sc), 20, 1)
   n.folds <- 5
   set.seed(1)
-  fold.vec <- sample(rep(1:n.folds, l=length(yt.vec)))
+  fold.vec <- sample(rep(1:n.folds, l=length(y.vec)))
   
+  # lines 7-11 were copied from Hocking's R script. I believe these are false, and should be using is.subtrain
   validation.fold <- 1
   is.validation <- fold.vec == validation.fold
   is.train <- !is.validation
   table(is.train)  
 
-  epoch <- 0
-  yt.train <- yt.vec[is.train]
-  X.train <- X.sc[is.train,]
+  # is.subtrain should be defining y.train and X.train
+  yt.train <- y.vec[is.train]
+  X.train <- X.mat[is.train,]
   loss.dt.list <- list()
   
   set.seed(1)
@@ -30,6 +25,10 @@ NNetOneSplit <-function(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.
   }
   str(weight.mat.list)
   ##create a for loop over epochs
+  for(epoch in 0:max.epochs)
+  {
+  	epoch
+  }
 }
 
 LogLoss <- function(prediction, label)
