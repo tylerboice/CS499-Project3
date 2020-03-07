@@ -11,9 +11,8 @@ NNetOneSplit <-function(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.
   table(is.train)  
 
   # is.subtrain should be defining y.train and X.train
-  yt.train <- y.ec[which(is.subtrain)]
-  X.train <- X.matec[which(is.subtrain)]
-  #loss.values <- list()
+  yt.train <- y.vec[is.subtrain]
+  X.train <- X.mat[is.subtrain]
   
   set.seed(1)
   weight.mat.list <- list()
@@ -27,7 +26,7 @@ NNetOneSplit <-function(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.
   ##create a for loop over epochs
   for(layer.i in 1:(length(n.hidden.units)-1))
   {
-    obs.i <- is.train[[layer.i]]
+    obs.i <- is.subtrain[[layer.i]]
     v <- X.train[obs.i,]
     w <- yt.train[obs.i]
     w.list <- 1/(1+exp(-w*v))
