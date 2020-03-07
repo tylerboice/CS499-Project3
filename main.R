@@ -58,10 +58,10 @@ stuff <- NNetOneSplit(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.su
 #		data=loss.dt)
 
 # best_epochs = epochs to minimize validation loss
-best_epochs <- 0.5
+best.epochs <- 10
 
 # Call NNetONe with x.mat =, y.vec, is.subtrain = TRUE for all, max.epochs = best_epochs
-stuff <- NNetOneSplit(X.mat, y.vec, is.subtrain=TRUE, best_epochs)
+stuff <- NNetOneSplit(X.mat, y.vec, best.epochs, step.size, n.hidden.units, is.subtrain)
 
 # Use learned V.mat, w.vec, to make predictions on test set
 #predictions <- ComputePredictions()
