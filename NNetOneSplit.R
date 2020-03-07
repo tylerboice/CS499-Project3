@@ -36,7 +36,7 @@ NNetOneSplit <-function(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.
     {
       loss.values <- if(layer.i==length(weight.mat.list))
       {
-        w / (1+exp(w*w.list[[length(w.list)]]))
+        w / (1+exp(-w*w.list[[length(w.list)]]))
       }
       else
       {
