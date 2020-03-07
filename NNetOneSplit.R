@@ -38,13 +38,13 @@ NNetOneSplit <-function(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.
     {
       loss.values <- if(layer.i==length(weight.mat.list))
       {
-        -yt / (1+exp(yt*h.list[[length(h.list)]]))
+        w / (1+exp(w*w.list[[length(w.list)]]))
       }
       else
       {
         grad.w <- t(weight.mat.list[[layer.i+1]]) %*% loss.values
         w.vec <- w.list[[layer.i+1]]
-        grad.w * w.vec * (1-h.vec)
+        grad.w * w.vec * (1-w.vec)
       }
       grad.list[[layer.i]] <- loss.values %*% t(w.list[[layer.i]])
     }
