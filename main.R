@@ -33,7 +33,7 @@ X.raw <- as.matrix(spam.dt[, -ncol(spam.dt), with=FALSE])
 y.vec <- spam.dt[[ncol(spam.dt)]]
 X.mat <- scale(X.raw)
 
-max.epochs <- 10
+max.epochs <- 100
 step.size <- 0.05
 n.hidden.units <- c(ncol(X.mat), 20, 1)
 
@@ -51,11 +51,13 @@ is.subtrain <- sample.int(n = nrow(X.mat), size = floor(.6*nrow(X.mat)), replace
 stuff <- NNetOneSplit(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.subtrain)
 
 # Plot subtrain/validation loss as fxn of num epochs, draw point to emphasize min validation loss
-#loss.dt <- do.call(rbind, loss.dt.list)
-#ggplot()+
-#geom_line(aes(
-#		x=epoch, y=mean.loss, color=set),
-#		data=loss.dt)
+weight.dt <- data.frame(do.call(rbind, stuff[2]))
+layer.i <- stuff[[4]]
+ggplot()+
+  facet_grid(. ~ layer.i, labeller=label_both)+
+  geom_tile(aes(
+    x=input, y=output, fill=weight),
+    data=weight.dt)
 
 # best_epochs = epochs to minimize validation loss
 best.epochs <- 10

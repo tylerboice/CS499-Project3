@@ -65,7 +65,7 @@ NNetOneSplit <-function(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.
       }
     }
   }
-  return(list(loss.values, v.mat, w.vec))
+  return(list(loss.values, v.mat, w.vec, layer.i))
 }
 
 LogLoss <- function(prediction, label)
