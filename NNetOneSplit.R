@@ -1,3 +1,11 @@
+library(ggplot2)
+library(data.table)
+spam.dt <- data.table::fread("spam.data")
+label.col.i <- ncol(spam.dt)
+X.mat <- as.matrix(spam.dt[, -label.col.i, with=FALSE])
+yt.vec <- ifelse(spam.dt[[label.col.i]]==1, 1, -1)
+X.sc <- scale(X.mat)
+
 NNetOneSplit <-function(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.subtrain)
 {
   X.mat <- as.matrix(spam.dt[, -label.col.i, with=FALSE])
