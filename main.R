@@ -18,7 +18,7 @@ library(ggplot2)
 library(caTools)
 
 # source NNetOneSplit function
-source("NNetOneSplit.R")
+source('NNetOneSplit.R')
 
 #download spam data set to local directory, if it is not present
 if(!file.exists("spam.data"))
@@ -67,3 +67,4 @@ stuff <- NNetOneSplit(X.mat, y.vec, is.subtrain=TRUE, best_epochs)
 predictions <- ComputePredictions()
 
 ComputePredictions <- function(X_train, y_train, X_new) class::knn(X_train, y_train, X_new)
+

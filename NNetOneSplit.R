@@ -11,9 +11,9 @@ NNetOneSplit <-function(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.
   table(is.train)  
 
   # is.subtrain should be defining y.train and X.train
-  yt.train <- y.vec[is.train]
-  X.train <- X.mat[is.train,]
-  loss.dt.list <- list()
+  yt.train <- y.ec[which(is.subtrain)]
+  X.train <- X.matec[which(is.subtrain)]
+  #loss.values <- list()
   
   set.seed(1)
   weight.mat.list <- list()
@@ -25,11 +25,9 @@ NNetOneSplit <-function(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.
   }
   
   ##create a for loop over epochs
-  # Set returned values
-
   for(layer.i in 1:(length(n.hidden.units)-1))
   {
-    layer.i <- obs.vec[[iteration.i]]
+    obs.i <- is.train[[layer.i]]
     v <- X.train[obs.i,]
     w <- yt.train[obs.i]
     w.list <- 1/(1+exp(-w*v))
@@ -42,16 +40,22 @@ NNetOneSplit <-function(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.
       }
       else
       {
-        grad.w <- t(weight.mat.list[[layer.i+1]]) %*% loss.values
+        # grad.w <- t(weight.mat.list[[layer.i+1]]) %*% loss.values
+        grad.w <- t(weight.mat.list[[layer.i+1]]) * loss.values
         w.vec <- w.list[[layer.i+1]]
         grad.w * w.vec * (1-w.vec)
       }
-      grad.list[[layer.i]] <- loss.values %*% t(w.list[[layer.i]])
+      #grad.list[[layer.i]] <- loss.values %*% t(w.list[[layer.i]])
+      grad.list[[lagetyer.i]] <- loss.values %*% t(grad.w)
     }
+    
+    v.mat <- weight.mat.list
+    print(dim(grad.list[[layer.i]]))
+    print(dim(v.mat[[layer.i]] - step.size))
     for(epoch in 1:max.epochs)
     {
-      v.mat[[layer.i]] <-
-        v.mat[[layer.i]] - step.size * grad.list[[layer.i]]
+      # v.mat[[layer.i]] <- v.mat[[layer.i]] - step.size * grad.list[[layer.i]]
+      v.mat[[layer.i]] <- v.mat[[layer.i]] - step.size * grad.list[[layer.i]]
     }
   }
   return(list(loss.values, v.mat, w.vec))
