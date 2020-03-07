@@ -26,10 +26,33 @@ NNetOneSplit <-function(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.
   
   ##create a for loop over epochs
   # Set returned values
-  for(epoch in 0:max.epochs)
+
+  for(layer.i in 1:(length(n.hidden.units)-1))
   {
-  	epoch
-    
+    layer.i <- obs.vec[[iteration.i]]
+    v <- X.train[obs.i,]
+    w <- yt.train[obs.i]
+    w.list <- 1/(1+exp(-w*v))
+    grad.list <- list()
+    for(layer.i in length(weight.mat.list):1)
+    {
+      loss.values <- if(layer.i==length(weight.mat.list))
+      {
+        -yt / (1+exp(yt*h.list[[length(h.list)]]))
+      }
+      else
+      {
+        grad.w <- t(weight.mat.list[[layer.i+1]]) %*% loss.values
+        w.vec <- w.list[[layer.i+1]]
+        grad.w * w.vec * (1-h.vec)
+      }
+      grad.list[[layer.i]] <- loss.values %*% t(w.list[[layer.i]])
+    }
+    for(epoch in 1:max.epochs)
+    {
+      v.mat[[layer.i]] <-
+        v.mat[[layer.i]] - step.size * grad.list[[layer.i]]
+    }
   }
   return(list(loss.values, v.mat, w.vec))
 }
