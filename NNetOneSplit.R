@@ -23,12 +23,15 @@ NNetOneSplit <-function(X.mat, y.vec, max.epochs, step.size, n.hidden.units, is.
     weight.mat.list[[layer.i]] <- matrix(
       rnorm(mat.nrow*mat.ncol), mat.nrow, mat.ncol)
   }
-  str(weight.mat.list)
+  
   ##create a for loop over epochs
+  # Set returned values
   for(epoch in 0:max.epochs)
   {
   	epoch
+    
   }
+  return(list(loss.values, v.mat, w.vec))
 }
 
 LogLoss <- function(prediction, label)
